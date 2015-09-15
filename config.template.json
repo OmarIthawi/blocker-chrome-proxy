@@ -1,0 +1,16 @@
+{
+    "allowedHosts": [
+        "www.example.com",
+        "example.com",
+        "example.org"
+    ],
+    "block": {
+        "http": true,
+        "https": true
+    },
+    "proxy": {
+        "host": "localhost",
+        "port": 9090
+    },
+    "initialUrl": "http://www.example.com"
+}

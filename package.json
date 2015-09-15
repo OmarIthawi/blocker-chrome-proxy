@@ -1,0 +1,17 @@
+{
+  "name": "zero-rating-proxy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "nodejs ./node_modules/.bin/gulp",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "Private",
+  "dependencies": {
+    "gulp": "^3.9.0",
+    "gulp-shell": "^0.4.3",
+    "supervisor": "^0.7.1"
+  }
+}
