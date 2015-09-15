@@ -43,7 +43,7 @@ var config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
     }
 
 
-    chromeCmdParts.push(config.initialUrl);
+    chromeCmdParts.push(util.format('"%s"', config.initialUrl));
 
     commands.push(chromeCmdParts.join(' '));
 
