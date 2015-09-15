@@ -12,7 +12,7 @@ http.createServer(function (clientReq, clientRes) {
     var endRequest = function () {
         var httpForbidden = 403;
         clientRes.writeHead(httpForbidden);
-        clientRes.write('Not an Edraak host');
+        clientRes.write('Host is blocked.');
         clientRes.end();
     };
 
@@ -30,15 +30,15 @@ http.createServer(function (clientReq, clientRes) {
         'u': clientReq.url
     });
 
-    var allowedHost = false;
+    var allowHost = false;
 
     config.allowedHosts.forEach(function (host) {
         if (host === clientReq.headers.host) {
-            allowedHost = true;
+            allowHost = true;
         }
     });
 
-    if (!allowedHost) {
+    if (!allowHost) {
         console.log('Denied request from host:', clientReq.headers.host);
         return endRequest();
     }
@@ -69,9 +69,11 @@ http.createServer(function (clientReq, clientRes) {
 
     proxyReq.end();
 
-}).listen(config.port, config.host);
+}).listen(config.proxy.port, config.proxy.host);
 
 
 console.log(util.format(
-    'Running proxy on http:/%s/%s/', config.host, config.port
+    'Running proxy on http://%s:%s',
+        config.proxy.host,
+        config.proxy.port
 ));

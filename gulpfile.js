@@ -23,23 +23,25 @@ var config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
          '--user-data-dir=/tmp/tmp-prof',
     ];
 
-    var proxy = util.format('%s:%s', config.host,config.port);
+    var proxy = util.format('%s:%s', config.proxy.host,config.proxy.port);
+    var proxyRules = [];
 
-    if (config.blockHttp) {
-        chromeCmdParts.push(
-            format('--proxy-server="http=%s;"', proxy
-        ));
+    if (config.block.http) {
+        proxyRules.push(util.format('http=%s', proxy));
     }
 
-    if (config.blockHttps) {
-        chromeCmdParts.push(
-            util.format('--proxy-server="https=%s;"', proxy
-        ));
+    if (config.block.https) {
+        proxyRules.push(util.format('https=%s', proxy));
     }
 
-    chromeCmdParts.push(
-        util.format('--proxy-server="https=%s;"', proxy
-    ));
+    if (proxyRules.length) {
+        chromeCmdParts.push(
+            util.format('--proxy-server="%s"', proxyRules.join(';'))
+        );
+    } else {
+        throw new Exception('Either of `http` or `https` should be blocked.');
+    }
+
 
     chromeCmdParts.push(config.initialUrl);
 
